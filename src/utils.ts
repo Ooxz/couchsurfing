@@ -1,5 +1,5 @@
 import { Permissions, LoyaltyUser } from "./enums"
-import { Review } from "./interfaces"
+import type { Review } from "./interfaces"
 
 const reviewTotalDisplay = document.querySelector('#reviews')
 const returningUserDisplay = document.querySelector('#returning-user')
@@ -32,7 +32,6 @@ export function makeMultiple(value: number) : string {
     } else return ''
 }
 
-// Broken code
 export function getTopTwoReviews(reviews : Review[]) : Review[] {
  const sortedReviews = reviews.sort((a, b) => b.stars - a.stars)
  return sortedReviews.slice(0,2)

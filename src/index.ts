@@ -1,15 +1,12 @@
 import { showReviewTotal, populateUser, showDetails, getTopTwoReviews} from './utils'
-import { Price, Country } from './types'
-import { LoyaltyUser } from './enums'
-import type { Review } from './interfaces'
+import { Permissions, LoyaltyUser } from './enums'
+import type { Review, Property } from './interfaces'
+import { MainProperty } from './classes'
 const propertyContainer = document.querySelector('.properties')
 const reviewContainer = document.querySelector('.reviews')
 const container = document.querySelector('.container')
 const button = document.querySelector('button')
 const footer = document.querySelector('.footer')
-
-let isLoggedIn: boolean
-
 
 // Reviews
 const reviews: Review[] = [
@@ -43,19 +40,7 @@ const you = {
 }
 
 // Array of Properties
-const properties : {
-    image: string;
-    title: string;
-    price: number;
-    location: {
-        firstLine: string;
-        city: string;
-        code: number;
-        country: string;
-    };
-    contact: [ number, string ];
-    isAvailable: boolean;
-}[] = [
+const properties : Property[] = [
     {
         image: 'images/colombia-property.jpg',
         title: 'Colombian Shack',
@@ -72,7 +57,7 @@ const properties : {
     {
         image: 'images/poland-property.jpg',
         title: 'Polish Cottage',
-        price: 34,
+        price: 30,
         location: {
             firstLine: 'no 23',
             city: 'Gdansk',
@@ -85,7 +70,7 @@ const properties : {
     {
         image: 'images/london-property.jpg',
         title: 'London Flat',
-        price: 23,
+        price: 25,
         location: {
             firstLine: 'flat 15',
             city: 'London',
@@ -94,6 +79,19 @@ const properties : {
         },
         contact: [+34829374892553, 'andyluger@aol.com'],
         isAvailable: true
+    },
+    {
+        image: 'images/malaysian-hotel.jpeg',
+        title: 'Malia Hotel',
+        price: 35,
+        location: {
+            firstLine: 'Room 4',
+            city: 'Malia',
+            code: 45334,
+            country: 'Malaysia'
+        },
+        contact: [ +60349822083, 'lee34@gmail.com'],
+        isAvailable: false
     }
 ]
 
@@ -114,7 +112,6 @@ for (let i = 0; i < properties.length; i++) {
     propertyContainer.appendChild(card)
 }
 
-//Broken code
 let count = 0
 function addReviews(array: 
  Review[]) : void {
@@ -136,3 +133,15 @@ button.addEventListener('click', () => addReviews(reviews))
 let currentLocation : [string, string, number] = ['London', '11.03', 17]
 footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°'
 
+
+let yourMainProperty = new MainProperty("./images/italian-property.jpg", "Italian property", [{
+    name: "Olive",
+    stars: 5,
+    loyaltyUser: LoyaltyUser.GOLD_USER,
+    date: "05/02/2023"
+}])
+
+const mainImageContainer = document.querySelector('.main-image')
+const image = document.createElement('img')
+image.setAttribute('src', yourMainProperty.src)
+mainImageContainer.appendChild(image)
